@@ -38,6 +38,7 @@ operator precedence through the use of parentheses in the input expression.
 
 
 
+
 public class TwoStack {
     Stack<String> ops = new Stack<>();
     Stack<Double> vals = new Stack<>();
@@ -80,5 +81,12 @@ public class TwoStack {
 
         // The final result should be the only value left in the vals stack
         return vals.pop();
+    }
+
+    public static void main(String[] args) {
+        TwoStack calculator = new TwoStack();
+        String expression = "( ( 1 + 2 ) * ( 3 + 4 ) )";
+        double result = calculator.evaluate(expression);
+        System.out.println("The result of the expression " + expression + " is: " + result);
     }
 }
