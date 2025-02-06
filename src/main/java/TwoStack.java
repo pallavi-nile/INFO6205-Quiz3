@@ -36,18 +36,49 @@ This implementation provides O(n) time complexity and effectively handles
 operator precedence through the use of parentheses in the input expression.
 */
 
+
+
 public class TwoStack {
-    Stack<String> ops  = new Stack<String>();
-    Stack<Double> vals = new Stack<Double>();
-    public double evaluate(String s){
+    Stack<String> ops = new Stack<>();
+    Stack<Double> vals = new Stack<>();
+
+    public double evaluate(String s) {
         String[] tokens = s.split(" ");
-       
-        //Loop over the tokens until you reach the end of the expression
-        //TODO
 
-        
+        for (String token : tokens) {
+            if (token.equals("(")) {
+                // Ignore opening parentheses
+                continue;
+            } else if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")) {
+                // Push operators onto the ops stack
+                ops.push(token);
+            } else if (token.equals(")")) {
+                // When encountering a closing parenthesis, perform the calculation
+                String op = ops.pop();
+                double val2 = vals.pop();
+                double val1 = vals.pop();
 
+                switch (op) {
+                    case "+":
+                        vals.push(val1 + val2);
+                        break;
+                    case "-":
+                        vals.push(val1 - val2);
+                        break;
+                    case "*":
+                        vals.push(val1 * val2);
+                        break;
+                    case "/":
+                        vals.push(val1 / val2);
+                        break;
+                }
+            } else {
+                // Assume the token is a number and push it onto the vals stack
+                vals.push(Double.parseDouble(token));
+            }
+        }
 
+        // The final result should be the only value left in the vals stack
         return vals.pop();
     }
 }
